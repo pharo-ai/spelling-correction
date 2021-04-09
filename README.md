@@ -39,9 +39,9 @@ languageFile := 'pharo-local/iceberg/pharo-ai/spelling-correction/data/english.j
 corrector loadLanguageModelFrom: languageFile.
 ```
 ```Smalltalk
-corrector isKnownWord: 'something'.
-corrector isKnownWord: 'somthing'.
+corrector isKnownWord: 'something'. "true"
+corrector isKnownWord: 'somthing'. "false"
 ```
 ```Smalltalk
-corrector correctionsFor: 'somthing'.
+corrector correctionsFor: 'somthing'. "an OrderedCollection('something' 'soothing')"
 ```
