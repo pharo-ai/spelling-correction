@@ -9,7 +9,7 @@ Class {
 	#category : #'AI-SpellingCorrection'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #correction }
 AISpellingCorrector >> correctionsFor: aWord [
 	"Propose corrections for a given word"
 	
@@ -28,17 +28,46 @@ AISpellingCorrector >> correctionsFor: aWord [
 	^ corrections 
 ]
 
-{ #category : #testing }
+{ #category : #initialization }
+AISpellingCorrector >> initializeWordFrequencies: aDictionary [
+	"Initialize spelling corrector with a dictionary of word frequencies"
+	
+	wordFrequencies := aDictionary.
+	vocabulary := aDictionary keys.
+	totalWordCount := aDictionary values sum.
+]
+
+{ #category : #correction }
 AISpellingCorrector >> isKnownWord: aWord [
 	"Answer true if aWord can be found in the vocabulary"
 	^ vocabulary includes: aWord
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'file in/out' }
+AISpellingCorrector >> loadWordFrequenciesFrom: aFileReference [
+	"Load a dictionary of word frequesncies from a JSON file"
+	
+	| frequencies |
+		
+	frequencies := aFileReference readStreamDo: [ :readStream |
+		STONJSON fromStream: readStream ].
+		
+	self initializeWordFrequencies: frequencies.
+]
+
+{ #category : #'language model' }
 AISpellingCorrector >> probabilityOf: aWord [
 	"Probability of a word calculated as a relative frequency of this word in a text on which the corrector was trained. Unknown words have probability 0"
 	^ (wordFrequencies at: aWord) / totalWordCount
 	
+]
+
+{ #category : #'file in/out' }
+AISpellingCorrector >> saveWordFrequenciesTo: aFileReference [
+	"Save word frequesncies into a JSON file"
+	
+	aFileReference writeStreamDo: [ :writeStream |
+		STONJSON put: wordFrequencies onStream: writeStream  ].
 ]
 
 { #category : #training }
@@ -59,16 +88,7 @@ AISpellingCorrector >> trainOn: aText [
 	
 ]
 
-{ #category : #accessing }
-AISpellingCorrector >> wordFrequencies: aDictionary [
-	"Initialize spelling corrector with a dictionary of word frequencies"
-	
-	wordFrequencies := aDictionary.
-	vocabulary := aDictionary keys.
-	totalWordCount := aDictionary values sum.
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #'similar words' }
 AISpellingCorrector >> wordsOneEditDistanceAwayFrom: aWord [
 	"Answer words that are only one edit away from aWord. An edit can be a deletion (remove one letter), a transposition (swap two adjacent letters), a replacement (change one letter to another) or an insertion (add a letter). For example, 'somthing' and 'somEthing' are one edit distance away from each other"
 	
@@ -100,7 +120,7 @@ AISpellingCorrector >> wordsOneEditDistanceAwayFrom: aWord [
 	^ (deletes, transposes, replaces, inserts) asSet
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'similar words' }
 AISpellingCorrector >> wordsTwoEditDistanceAwayFrom: aWord [
 	"Answer words that are two simple edits away from aWord. An edit can be a deletion (remove one letter), a transposition (swap two adjacent letters), a replacement (change one letter to another) or an insertion (add a letter). For example, 'smthing' and 'smething' are two edits away from each other -- delete 'o' and insert 'e'"
 	

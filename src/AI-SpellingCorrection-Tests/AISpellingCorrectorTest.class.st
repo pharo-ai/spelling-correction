@@ -29,7 +29,7 @@ AISpellingCorrectorTest >> setUp [
 	totalWordCount := wordFrequencies values sum.
 	
 	corrector := AISpellingCorrector new.
-	corrector wordFrequencies: wordFrequencies.
+	corrector initializeWordFrequencies: wordFrequencies.
 	
 ]
 
