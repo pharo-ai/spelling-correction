@@ -30,3 +30,18 @@ spec
 If you are new to baselines and Metacello, check out the [Baselines](https://github.com/pharo-open-documentation/pharo-wiki/blob/master/General/Baselines.md) tutorial on Pharo Wiki.
 
 ## How to use it?
+
+```Smalltalk
+corrector := AISpellingCorrector new.
+```
+```Smalltalk
+languageFile := 'pharo-local/iceberg/pharo-ai/spelling-correction/data/english.json' asFileReference.
+corrector loadLanguageModelFrom: languageFile.
+```
+```Smalltalk
+corrector isKnownWord: 'something'.
+corrector isKnownWord: 'somthing'.
+```
+```Smalltalk
+corrector correctionsFor: 'somthing'.
+```
