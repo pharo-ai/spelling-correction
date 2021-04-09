@@ -44,7 +44,7 @@ AISpellingCorrector >> isKnownWord: aWord [
 ]
 
 { #category : #'file in/out' }
-AISpellingCorrector >> loadWordFrequenciesFrom: aFileReference [
+AISpellingCorrector >> loadLanguageModelFrom: aFileReference [
 	"Load a dictionary of word frequesncies from a JSON file"
 	
 	| frequencies |
@@ -63,7 +63,7 @@ AISpellingCorrector >> probabilityOf: aWord [
 ]
 
 { #category : #'file in/out' }
-AISpellingCorrector >> saveWordFrequenciesTo: aFileReference [
+AISpellingCorrector >> saveLanguageModelTo: aFileReference [
 	"Save word frequesncies into a JSON file"
 	
 	aFileReference writeStreamDo: [ :writeStream |
