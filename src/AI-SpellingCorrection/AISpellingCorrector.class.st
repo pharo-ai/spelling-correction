@@ -33,7 +33,7 @@ AISpellingCorrector >> initializeWordFrequencies: aDictionary [
 	"Initialize spelling corrector with a dictionary of word frequencies"
 	
 	wordFrequencies := aDictionary.
-	vocabulary := aDictionary keys.
+	vocabulary := aDictionary keys asSet.
 	totalWordCount := aDictionary values sum.
 ]
 
