@@ -1,6 +1,6 @@
 # Spelling Correction
 
-![Build status](https://github.com/pharo-ai/spelling-correction/workflows/CI/badge.svg)
+[![Build status](https://github.com/pharo-ai/spelling-correction/workflows/CI/badge.svg)](https://github.com/pharo-ai/spelling-correction/actions/workflows/test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/pharo-ai/spelling-correction/badge.svg?branch=master)](https://coveralls.io/github/pharo-ai/spelling-correction?branch=master)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/pharo-ai/spelling-correction/master/LICENSE)
 
