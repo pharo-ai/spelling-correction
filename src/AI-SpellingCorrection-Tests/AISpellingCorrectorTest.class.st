@@ -38,7 +38,7 @@ AISpellingCorrectorTest >> testCorrectionsForWithAWordWithFewMistakes [
 
 	self
 		assertCollection: (corrector correctionsFor: 'somthing')
-		hasSameElements: #( something soothing ) asOrderedCollection
+		hasSameElements: #( something soothing )
 ]
 
 { #category : #tests }
@@ -48,7 +48,7 @@ AISpellingCorrectorTest >> testCorrectionsForWithAWordWithMoreMistakes [
 		assertCollection: (corrector correctionsFor: 'smthing')
 		hasSameElements:
 			#( something nothing thing sitting smiling soothing sting smoothing )
-				asOrderedCollection
+				
 ]
 
 { #category : #tests }
