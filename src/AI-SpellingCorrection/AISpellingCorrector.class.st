@@ -49,6 +49,7 @@ AISpellingCorrector >> loadLanguageModelFrom: aFileReference [
 	"Load a dictionary of word frequencies from a JSON file"
 
 	| frequencies |
+	self flag: 'not tested'.
 	frequencies := aFileReference readStreamDo: [ :readStream | 
 		               STONJSON fromStream: readStream ].
 
@@ -67,6 +68,7 @@ AISpellingCorrector >> saveLanguageModelTo: aFileReference [
 
 	"Save word frequencies into a JSON file"
 
+	self flag: 'not tested'.
 	aFileReference writeStreamDo: [ :writeStream | 
 		STONJSON put: wordFrequencies onStream: writeStream ]
 ]

@@ -96,15 +96,17 @@ AISpellingCorrectorTest >> testProbabilityOf [
 
 { #category : #tests }
 AISpellingCorrectorTest >> testSizeOfWordsOneEditDistanceAwayFrom [
-
+self flag:'the value of assertion cannot be obtained before running the code'.
 	self
 		assert: (corrector wordsOneEditDistanceAwayFrom: 'somthing') size
-		equals: 442.
+		equals: 442
 ]
 
 { #category : #tests }
 AISpellingCorrectorTest >> testSizeOfWordsTwoEditDistanceAwayFrom [
-
+self flag:
+		'the value of assertion cannot be obtained before running the code'.
+	
 	self
 		assert: (corrector wordsTwoEditDistanceAwayFrom: 'somthing') size
 		equals: 90902
