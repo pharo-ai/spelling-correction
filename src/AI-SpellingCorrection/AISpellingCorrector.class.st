@@ -45,14 +45,14 @@ AISpellingCorrector >> isKnownWord: aWord [
 
 { #category : #'file in/out' }
 AISpellingCorrector >> loadLanguageModelFrom: aFileReference [
-	"Load a dictionary of word frequesncies from a JSON file"
-	
+
+	"Load a dictionary of word frequencies from a JSON file"
+
 	| frequencies |
-		
-	frequencies := aFileReference readStreamDo: [ :readStream |
-		STONJSON fromStream: readStream ].
-		
-	self initializeWordFrequencies: frequencies.
+	frequencies := aFileReference readStreamDo: [ :readStream | 
+		               STONJSON fromStream: readStream ].
+
+	self initializeWordFrequencies: frequencies
 ]
 
 { #category : #'language model' }
@@ -64,10 +64,11 @@ AISpellingCorrector >> probabilityOf: aWord [
 
 { #category : #'file in/out' }
 AISpellingCorrector >> saveLanguageModelTo: aFileReference [
-	"Save word frequesncies into a JSON file"
-	
-	aFileReference writeStreamDo: [ :writeStream |
-		STONJSON put: wordFrequencies onStream: writeStream  ].
+
+	"Save word frequencies into a JSON file"
+
+	aFileReference writeStreamDo: [ :writeStream | 
+		STONJSON put: wordFrequencies onStream: writeStream ]
 ]
 
 { #category : #training }
