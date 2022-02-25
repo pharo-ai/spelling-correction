@@ -52,6 +52,40 @@ AISpellingCorrectorTest >> testCorrectionsForWithAWordWithMoreMistakes [
 ]
 
 { #category : #tests }
+AISpellingCorrectorTest >> testFit [
+
+	| expectedFrequencies expectedVocabulary |
+	expectedFrequencies := { 
+		                       ('ai' -> 1).
+		                       ('am' -> 2).
+		                       ('doing' -> 1).
+		                       ('hello' -> 1).
+		                       ('i' -> 2).
+		                       ('in' -> 1).
+		                       ('inria' -> 1).
+		                       ('on' -> 1).
+		                       ('pharo' -> 1).
+		                       ('repository' -> 1).
+		                       ('some' -> 1).
+		                       ('testing' -> 1).
+		                       ('the' -> 1).
+		                       ('world' -> 1) } asDictionary.
+
+	expectedVocabulary := #( 'doing' 'some' 'pharo' 'repository'
+	                         'on' 'world' 'hello' 'i' 'testing' 'am' 'inria'
+	                         'the' 'in' 'ai' ).
+
+	corrector fit:
+		'Hello World, I am in INRIA. I am doing some testing on the pharo-ai repository'.
+
+	self assert: corrector totalWordCount equals: 16.
+	self
+		assertCollection: corrector vocabulary
+		hasSameElements: expectedVocabulary.
+	self assert: corrector wordFrequencies equals: expectedFrequencies .
+]
+
+{ #category : #tests }
 AISpellingCorrectorTest >> testInitializeWordFrequencies [
 
 	| wordFrequencies |
@@ -110,38 +144,4 @@ self flag:
 	self
 		assert: (corrector wordsTwoEditDistanceAwayFrom: 'somthing') size
 		equals: 90902
-]
-
-{ #category : #tests }
-AISpellingCorrectorTest >> testTrainOn [
-
-	| expectedFrequencies expectedVocabulary |
-	expectedFrequencies := { 
-		                       ('ai' -> 1).
-		                       ('am' -> 2).
-		                       ('doing' -> 1).
-		                       ('hello' -> 1).
-		                       ('i' -> 2).
-		                       ('in' -> 1).
-		                       ('inria' -> 1).
-		                       ('on' -> 1).
-		                       ('pharo' -> 1).
-		                       ('repository' -> 1).
-		                       ('some' -> 1).
-		                       ('testing' -> 1).
-		                       ('the' -> 1).
-		                       ('world' -> 1) } asDictionary.
-
-	expectedVocabulary := #( 'doing' 'some' 'pharo' 'repository'
-	                         'on' 'world' 'hello' 'i' 'testing' 'am' 'inria'
-	                         'the' 'in' 'ai' ).
-
-	corrector trainOn:
-		'Hello World, I am in INRIA. I am doing some testing on the pharo-ai repository'.
-
-	self assert: corrector totalWordCount equals: 16.
-	self
-		assertCollection: corrector vocabulary
-		hasSameElements: expectedVocabulary.
-	self assert: corrector wordFrequencies equals: expectedFrequencies .
 ]

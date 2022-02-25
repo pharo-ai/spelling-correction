@@ -28,18 +28,40 @@ AISpellingCorrector >> correctionsFor: aWord [
 	^ corrections 
 ]
 
+{ #category : #training }
+AISpellingCorrector >> fit: aText [
+
+	"Train on a large text by extracting words from it"
+	
+	| bagOfWords |
+	
+	bagOfWords := (aText substrings flatCollect: [ :each |
+		'[a-z]+' asRegex matchesIn: each asLowercase collect: #value ]) asBag.
+	
+	totalWordCount := bagOfWords size.
+	vocabulary := bagOfWords asSet.
+	wordFrequencies := bagOfWords valuesAndCounts.
+	
+	
+	
+	
+]
+
 { #category : #initialization }
 AISpellingCorrector >> initializeWordFrequencies: aDictionary [
+
 	"Initialize spelling corrector with a dictionary of word frequencies"
-	
+
 	wordFrequencies := aDictionary.
 	vocabulary := aDictionary keys asSet.
-	totalWordCount := aDictionary values sum.
+	totalWordCount := aDictionary values sum
 ]
 
 { #category : #correction }
 AISpellingCorrector >> isKnownWord: aWord [
+
 	"Answer true if aWord can be found in the vocabulary"
+
 	^ vocabulary includes: aWord
 ]
 
@@ -58,9 +80,10 @@ AISpellingCorrector >> loadLanguageModelFrom: aFileReference [
 
 { #category : #'language model' }
 AISpellingCorrector >> probabilityOf: aWord [
+
 	"Probability of a word calculated as a relative frequency of this word in a text on which the corrector was trained. Unknown words have probability 0"
+
 	^ (wordFrequencies at: aWord) / totalWordCount
-	
 ]
 
 { #category : #'file in/out' }
@@ -71,24 +94,6 @@ AISpellingCorrector >> saveLanguageModelTo: aFileReference [
 	self flag: 'not tested'.
 	aFileReference writeStreamDo: [ :writeStream | 
 		STONJSON put: wordFrequencies onStream: writeStream ]
-]
-
-{ #category : #training }
-AISpellingCorrector >> trainOn: aText [
-	"Train on a large text by extracting words from it"
-	
-	| bagOfWords |
-	
-	bagOfWords := (aText substrings flatCollect: [ :each |
-		'[a-z]+' asRegex matchesIn: each asLowercase collect: #value ]) asBag.
-	
-	totalWordCount := bagOfWords size.
-	vocabulary := bagOfWords asSet.
-	wordFrequencies := bagOfWords valuesAndCounts.
-	
-	
-	
-	
 ]
 
 { #category : #'similar words' }
